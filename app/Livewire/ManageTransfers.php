@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\LocalTransferCreated;
 use App\Models\TransferFile;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ class ManageTransfers extends Component
 
         $this->pendingFiles = [];
 
-        // LocalTransferCreated::dispatch($transfer);
+        LocalTransferCreated::dispatch($transfer);
     }
 
     public function render()

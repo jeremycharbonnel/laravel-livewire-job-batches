@@ -11,17 +11,12 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class LocalTransferCreated implements ShouldBroadcast
+class TransferCompleted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public function __construct(private Transfer $transfer)
     {
-    }
-
-    public function getTransfer(): Transfer
-    {
-        return $this->transfer;
     }
 
     public function broadcastOn()
