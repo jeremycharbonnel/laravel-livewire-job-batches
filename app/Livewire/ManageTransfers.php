@@ -11,6 +11,13 @@ class ManageTransfers extends Component
 
     public array $pendingFiles = [];
 
+    public function initiateTransfer()
+    {
+        $this->validate([
+            'pendingFiles.*' => ['image', 'max:5120']
+        ]);
+    }
+
     public function render()
     {
         return view('livewire.manage-transfers');

@@ -67,13 +67,23 @@
             @endforelse
         </div>
 
-        <div>
-            <button type="button" class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-400 py-2 text-white">
+        <div class="space-y-3">
+            <button
+                type="button"
+                wire:click="initiateTransfer"
+                class="flex w-full items-center justify-center gap-2 rounded-lg bg-blue-400 py-2 text-white"
+            >
                 Do some magic
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6">
                     <path stroke="currentColor" fill="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
                 </svg>
             </button>
+
+            @error('pendingFiles.*')
+                <div class="w-full rounded-xl bg-red-100 p-3">
+                    <div class="text-sm text-red-400">{{ $message }}</div>
+                </div>
+            @enderror
         </div>
     </div>
 </div>

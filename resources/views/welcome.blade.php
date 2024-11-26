@@ -20,6 +20,7 @@
         @endif
     </head>
     <body class="bg-gray-100 p-6 font-sans antialiased">
+        <div class="px-6 text-gray-500">authenticated as <b>{{ auth()->user()?->email }}</b></div>
         @livewire('manage-transfers')
     </body>
 </html>
