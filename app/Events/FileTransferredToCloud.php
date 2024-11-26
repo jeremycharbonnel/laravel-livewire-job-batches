@@ -29,10 +29,8 @@ class FileTransferredToCloud implements ShouldBroadcastNow
      *
      * @return array<int, \Illuminate\Broadcasting\Channel>
      */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('channel-name'),
-        ];
+        return new PrivateChannel("notifications.{$this->file->transfer->user_id}");
     }
 }
