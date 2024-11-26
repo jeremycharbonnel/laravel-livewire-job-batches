@@ -19,7 +19,7 @@
             </style>
         @endif
     </head>
-    <body class="p-6 font-sans antialiased">
+    <body class="bg-gray-100 p-6 font-sans antialiased">
         @livewire('manage-transfers')
     </body>
 </html>
