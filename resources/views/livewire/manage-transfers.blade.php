@@ -52,17 +52,19 @@
         </div>
 
         <div>
-            <input id="files" name="files" type="file" multiple>
+            <input wire:model="pendingFiles" id="files" name="files" type="file" multiple>
         </div>
 
         <div class="flex justify-center font-medium">
             Files
         </div>
 
-        <div class="-gap-1 flex items-center">
-            <img src="#" alt="" />
-            <img src="#" alt="" />
-            <img src="#" alt="" />
+        <div class="ml-4 flex items-center">
+            @forelse($pendingFiles as $pendingFile)
+                <img src="{{ $pendingFile->temporaryUrl() }}" class="-ml-4 h-16 w-16" />
+            @empty
+                <p>No files selected</p>
+            @endforelse
         </div>
 
         <div>
