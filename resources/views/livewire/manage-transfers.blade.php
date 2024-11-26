@@ -9,39 +9,49 @@
         </thead>
 
         <tbody>
-            <tr>
-                <td class="py-3">
-                    <div class="w-max rounded-lg bg-green-200 px-3 py-1 text-sm font-bold text-green-500">Uploaded</div>
-                </td>
-                <td class="text-gray-500">d9cbb5a7-ea12-42b4-9fb3-3e5a7f10631f</td>
-                <td class="text-gray-500">2MB</td>
-            </tr>
-            <tr>
-                <td class="py-3">
-                    <div class="w-max rounded-lg bg-orange-200 px-3 py-1 text-sm font-bold text-orange-500">Finished with errors</div>
-                </td>
-                <td class="text-gray-500">0d669854-fb2c-480f-ae04-8572ec695242</td>
-                <td class="text-gray-500">0MB</td>
-            </tr>
-            <tr>
-                <td class="py-3">
-                    <div class="w-max rounded-lg bg-red-200 px-3 py-1 text-sm font-bold text-red-500">Failed</div>
-                </td>
-                <td class="text-gray-500">e176a925-8534-446f-a1f6-3fc2e06fcb0f</td>
-                <td class="text-gray-500">0MB</td>
-            </tr>
-            <tr>
-                <td class="py-3">
-                    <div class="mr-6 flex h-2 overflow-hidden rounded bg-gray-50">
-                        <div
-                            style="transform: scale({{ 50 / 100 }}, 1)"
-                            class="flex w-full origin-left flex-col bg-blue-500 shadow-none transition-transform duration-200 ease-in-out"
-                        ></div>
-                    </div>
-                </td>
-                <td class="text-gray-500">296fc64e-af31-401d-9895-3d18ce02931c</td>
-                <td class="text-gray-500">0MB</td>
-            </tr>
+            @forelse($transfers as $transfer)
+                <tr>
+                    @if(is_null($transfer->jobBatch))
+                        <td>
+                            <div class="mr-6 flex h-2 overflow-hidden rounded bg-gray-50">
+                                <div
+                                    style="transform: scale(0, 1)"
+                                    class="flex w-full origin-left flex-col bg-blue-500 shadow-none transition-transform duration-200 ease-in-out"
+                                ></div>
+                            </div>
+                        </td>
+                    @elseif($transfer->jobBatch->hasPendingJobs())
+                        <td>
+                            <div class="mr-6 flex h-2 overflow-hidden rounded bg-gray-50">
+                                <div
+                                    style="transform: scale({{ $transfer->jobBatch->progress() / 100 }}, 1)"
+                                    class="flex w-full origin-left flex-col bg-blue-500 shadow-none transition-transform duration-200 ease-in-out"
+                                ></div>
+                            </div>
+                        </td>
+                    @elseif($transfer->jobBatch->finished() and $transfer->jobBatch->failed())
+                        <td>
+                            <div class="w-max rounded-lg bg-red-200 px-3 py-1 text-sm font-bold text-red-500">Failed</div>
+                        </td>
+                    @elseif($transfer->jobBatch->finished() and $transfer->jobBatch->hasFailures())
+                        <td>
+                            <div class="w-max rounded-lg bg-orange-200 px-3 py-1 text-sm font-bold text-orange-500">Finished with errors</div>
+                        </td>
+                    @elseif($transfer->jobBatch->finished())
+                        <td>
+                            <div class="w-max rounded-lg bg-green-200 px-3 py-1 text-sm font-bold text-green-500">Uploaded</div>
+                        </td>
+                    @endif
+                    <td class="text-gray-500">{{ $transfer->batch_id }}</td>
+                    <td class="py-3 text-gray-500">{{ $transfer->files_sum_size }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" class="text-sm text-gray-500">
+                        You have no transfers. Create a batch on the right 👉🏻
+                    </td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 

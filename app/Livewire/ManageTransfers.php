@@ -43,6 +43,8 @@ class ManageTransfers extends Component
 
     public function render()
     {
-        return view('livewire.manage-transfers');
+        return view('livewire.manage-transfers', [
+            'transfers' => Auth::user()->transfers()->with('jobBatch')->withSum('files', 'size')->get()
+        ]);
     }
 }
